@@ -21,7 +21,7 @@ DEVICE     = atmega328p
 			# atmega328p clock 
 CLOCK      = 16000000
 PROGRAMMER = arduino #-c stk500v2 -P avrdoper
-OBJECTS    = main.o
+OBJECTS    = main.o 
 			# Fuses for the arduino (redboard)
 FUSES      = U lfuse:w:0xFF:m -U hfuse:w:0xDE:m -U efuse:w:0x05:m # arduino defaults
 
@@ -50,17 +50,17 @@ FUSES      = U lfuse:w:0xFF:m -U hfuse:w:0xDE:m -U efuse:w:0x05:m # arduino defa
 
 # Tune the lines below only if you know what you are doing:
 
-AVRDUDE = avrdude -c $(PROGRAMMER) -p $(DEVICE) -P /dev/cu.usbserial-DA017R7G
+AVRDUDE = avrdude -c $(PROGRAMMER) -p $(DEVICE) -P /dev/cu.usbmodem14301
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(CLOCK) -mmcu=$(DEVICE)
 
 # symbolic targets:
-all:	main.hex
+all: main.hex
 
-.c.o:
+.c.o: FRAM.h
 	$(COMPILE) -c $< -o $@
 
 .S.o:
-	$(COMPILE) -x assembler-with-cpp -c $< -o $@
+	$(COMPILE) -x assembler-with-cpp -c $< -o $@ 
 # "-x assembler-with-cpp" should not be necessary since this is the default
 # file type for the .S (with capital S) extension. However, upper case
 # characters are not always preserved on Windows. To ensure WinAVR
@@ -93,6 +93,7 @@ main.hex: main.elf
 	rm -f main.hex
 	avr-objcopy -j .text -j .data -O ihex main.elf main.hex
 	avr-size --format=avr --mcu=$(DEVICE) main.elf
+
 # If you have an EEPROM section, you must also create a hex file for the
 # EEPROM and add it to the "flash" target.
 
@@ -102,3 +103,4 @@ disasm:	main.elf
 
 cpp:
 	$(COMPILE) -E main.c
+

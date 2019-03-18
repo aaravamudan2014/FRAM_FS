@@ -8,6 +8,11 @@
         "adafruit_fram_i2c.h": "c",
         "i2cmaster.h": "c",
         "serial.h": "c",
-        "inttypes.h": "c"
+        "inttypes.h": "c",
+        "bitset": "cpp",
+        "utility": "cpp",
+        "memory": "cpp",
+        "__locale": "cpp",
+        "__string": "cpp"
     }
 }

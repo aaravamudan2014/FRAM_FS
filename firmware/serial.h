@@ -79,6 +79,11 @@ int availableForWrite(void){
     return MAX_BUFFER_SIZE - senderItemCount;
 }
 
+void usart_flush(){
+    unsigned char dummy;
+    while(UCSR0A & 1 << RXC0) dummy = UDR0;
+}
+
 /*
 * sets the baud rate and sets the parity and stop bits
 */
@@ -198,6 +203,10 @@ void print(char* printVal){
     }
 }
 
+
+void printChar(char charVal){
+    usartSend(charVal);
+}
 
 // TODO: add overloaded functions for serial
 /**
