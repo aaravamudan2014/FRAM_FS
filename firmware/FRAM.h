@@ -23,11 +23,10 @@ void clearAllMemoryContents(){
     //starting writing from 
     i2c_write(0x00);
     i2c_write(0x00); 
-    println("Clearing all memory contents ");
     for(unsigned int i=0; i < 32768; i++){        
         i2c_write(0x00);   
     }
-    println("All memory set to zero");
+    println("All memory contents set to zero");
     i2c_stop();
 }
 void writeToAddress(unsigned int address, char data ){
@@ -61,6 +60,8 @@ char readByteFromAddress(unsigned int address){
     return ret;
 }
 
+
+//TO BE CHANGED TO PREVENT MEMORY LEAK
 char* readSequenceFromAddress(unsigned int address, int length){
     char* ret = (char*)malloc(length*sizeof(char));
     int cnt = 0;
