@@ -203,6 +203,24 @@ void print(char* printVal){
     }
 }
 
+char* receiveString(){
+    char  inputString[100];
+    int cnt = 0;
+    char newChar = '0';
+    while(newChar != 13){
+        inputString[cnt] = usartReceive();
+        newChar = inputString[cnt];
+        cnt++; 
+    }
+
+    for( int i=cnt ; i<100; i++){
+        inputString[i] = ' ';
+    }
+    inputString[100] = '\0';
+
+    println(inputString);
+    return inputString;
+}
 
 void printChar(char charVal){
     usartSend(charVal);
